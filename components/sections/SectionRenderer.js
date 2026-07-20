@@ -1,17 +1,21 @@
+import dynamic from 'next/dynamic';
 import { getServices, getCaseStudies, getTestimonials, getSettings } from '@/lib/data';
-import Hero from './Hero';
-import StatsBar from './StatsBar';
 import PlatformMarquee from './PlatformMarquee';
 import ServicesGrid from './ServicesGrid';
 import PortfolioPreview from './PortfolioPreview';
 import ProcessTimeline from './ProcessTimeline';
-import TestimonialSlider from './TestimonialSlider';
 import MissionColumns from './MissionColumns';
 import ValuesBand from './ValuesBand';
 import WorkWithUsForm from './WorkWithUsForm';
 import AboutBlocks from './AboutBlocks';
 import RichText from './RichText';
 import CtaMarquee from './CtaMarquee';
+
+// Framer-Motion-heavy sections are code-split so pages that don't use them
+// (e.g. privacy/terms) never ship the animation runtime. They still SSR.
+const Hero = dynamic(() => import('./Hero'));
+const StatsBar = dynamic(() => import('./StatsBar'));
+const TestimonialSlider = dynamic(() => import('./TestimonialSlider'));
 
 /**
  * Maps a page's ordered section records to components, fetching only the data

@@ -1,0 +1,57 @@
+// Announcement / promo popup.
+.promo-popup {
+  position: fixed;
+  left: clamp(1rem, 3vw, 1.75rem);
+  bottom: clamp(1rem, 3vw, 1.75rem);
+  z-index: 950;
+  width: min(340px, calc(100vw - 2rem));
+  background: #fff;
+  border: 1px solid var(--grey-200);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 1.5rem;
+  animation: promo-in 0.5s var(--ease-out);
+}
+
+.promo-popup__close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  background: none;
+  border: none;
+  color: var(--grey-400);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: var(--radius-sm);
+}
+
+.promo-popup__close:hover {
+  background: var(--grey-100);
+  color: var(--ink);
+}
+
+.promo-popup__heading {
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem;
+  padding-right: 1.5rem;
+}
+
+.promo-popup__text {
+  color: var(--grey-500);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0 0 1rem;
+}
+
+@keyframes promo-in {
+  from {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .promo-popup {
+    animation: none;
+  }
+}

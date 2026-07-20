@@ -1,6 +1,8 @@
 import SiteHeader from '@/components/layout/SiteHeader';
 import Footer from '@/components/layout/Footer';
 import FloatingWhatsApp from '@/components/layout/FloatingWhatsApp';
+import AnnouncementPopup from '@/components/AnnouncementPopup';
+import RouteProgress from '@/components/motion/RouteProgress';
 import Analytics from '@/components/Analytics';
 import { getSettings, getServices } from '@/lib/data';
 
@@ -16,10 +18,12 @@ export default async function SiteLayout({ children }) {
       <a href="#main" className="skip-link">
         Skip to content
       </a>
+      <RouteProgress />
       <SiteHeader settings={settings} services={services} />
       <main id="main">{children}</main>
       <Footer settings={settings} services={services} />
       <FloatingWhatsApp number={settings?.whatsapp} template={settings?.whatsappTemplate} />
+      <AnnouncementPopup announcement={settings?.announcement} />
       <Analytics ga4Id={settings?.ga4Id} metaPixelId={settings?.metaPixelId} />
     </>
   );

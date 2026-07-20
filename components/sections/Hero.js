@@ -3,6 +3,7 @@ import Icon from '@/components/Icon';
 import MediaImage from '@/components/MediaImage';
 import HeroHeadline from '@/components/motion/HeroHeadline';
 import Reveal from '@/components/motion/Reveal';
+import Magnetic from '@/components/motion/Magnetic';
 import '@/styles/hero.scss';
 
 /**
@@ -48,12 +49,14 @@ export default function Hero({ data = {}, settings }) {
 
           <Reveal className="hero__ctas" delay={0.45}>
             {primaryCta?.label && (
-              <Link href={primaryCta.href || '/contact'} className="btn btn-primary btn-lg">
-                {primaryCta.label}
-                <span className="btn-arrow">
-                  <Icon name="arrow-right" size={18} />
-                </span>
-              </Link>
+              <Magnetic>
+                <Link href={primaryCta.href || '/contact'} className="btn btn-primary btn-lg">
+                  {primaryCta.label}
+                  <span className="btn-arrow">
+                    <Icon name="arrow-right" size={18} />
+                  </span>
+                </Link>
+              </Magnetic>
             )}
             {secondaryCta?.label && (
               <Link href={secondaryCta.href || '/portfolio'} className="btn btn-ghost btn-lg">
