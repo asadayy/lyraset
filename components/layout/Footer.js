@@ -43,7 +43,7 @@ export default function Footer({ settings, services = [] }) {
           {/* Company */}
           <div className="site-footer__col">
             <h3 className="site-footer__heading">Company</h3>
-            <ul>
+            <ul className="site-footer__links">
               <li><Link href="/">Home</Link></li>
               <li><Link href="/about">About Us</Link></li>
               <li><Link href="/services">Services</Link></li>
@@ -56,7 +56,7 @@ export default function Footer({ settings, services = [] }) {
           {/* What We Offer */}
           <div className="site-footer__col">
             <h3 className="site-footer__heading">What We Offer</h3>
-            <ul>
+            <ul className="site-footer__links">
               {services.slice(0, 6).map((s) => (
                 <li key={s.slug}>
                   <Link href={`/services/${s.slug}`}>{s.title}</Link>
@@ -70,36 +70,45 @@ export default function Footer({ settings, services = [] }) {
             <h3 className="site-footer__heading">Contact</h3>
             {settings?.phones?.[0] && (
               <a className="site-footer__line" href={`tel:${settings.phones[0].replace(/\s/g, '')}`}>
-                <Icon name="phone" size={16} /> {settings.phones[0]}
+                <span className="site-footer__line-icon"><Icon name="phone" size={15} /></span>
+                {settings.phones[0]}
               </a>
             )}
             {settings?.emails?.[0] && (
               <a className="site-footer__line" href={`mailto:${settings.emails[0]}`}>
-                <Icon name="mail" size={16} /> {settings.emails[0]}
+                <span className="site-footer__line-icon"><Icon name="mail" size={15} /></span>
+                {settings.emails[0]}
               </a>
             )}
-            {(settings?.offices || []).map((o) => (
-              <div className="site-footer__office" key={o.label}>
-                <Icon name="map-pin" size={16} />
-                <span>
-                  <strong>{o.label}</strong>
-                  <br />
-                  {o.address}
-                </span>
-              </div>
-            ))}
+            <div className="site-footer__offices">
+              {(settings?.offices || []).map((o) => (
+                <div className="site-footer__office" key={o.label}>
+                  <span className="site-footer__line-icon"><Icon name="map-pin" size={15} /></span>
+                  <span>
+                    <strong>{o.label}</strong>
+                    <span className="site-footer__office-addr">{o.address}</span>
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
         <div className="site-footer__bottom">
-          <p>
+          <p className="site-footer__copyright">
             © {year} {brand}. All rights reserved.
           </p>
-          <div className="site-footer__bottom-links">
+          <nav className="site-footer__bottom-links" aria-label="Legal">
             <Link href="/privacy">Privacy</Link>
+            <span className="site-footer__sep" aria-hidden="true" />
             <Link href="/terms">Terms</Link>
-            {settings?.footerCredit && <span className="site-footer__credit">{settings.footerCredit}</span>}
-          </div>
+            {settings?.footerCredit && (
+              <>
+                <span className="site-footer__sep" aria-hidden="true" />
+                <span className="site-footer__credit">{settings.footerCredit}</span>
+              </>
+            )}
+          </nav>
         </div>
       </div>
     </footer>
