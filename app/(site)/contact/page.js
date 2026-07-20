@@ -52,47 +52,83 @@ export default async function ContactPage() {
           <div className="contact-forms">
             <div className="contact-card">
               <SectionHeader eyebrow="Quick Message" heading="Send us a note" />
+              <p className="contact-card__hint">A quick hello or a question — we&apos;ll get right back to you.</p>
               <LeadForm source="contact" buttonLabel="Send Message" />
             </div>
 
             <div className="contact-card">
               <SectionHeader eyebrow="Detailed Brief" heading="Tell us everything" />
+              <p className="contact-card__hint">Share your goals, timeline, and budget for a tailored proposal.</p>
               <LeadForm source="brief" buttonLabel="Send Brief" rows={7} />
             </div>
           </div>
 
           {/* Info + map */}
           <aside className="contact-info">
-            <h3 className="contact-info__heading">Contact Info</h3>
-            {phone && (
-              <a className="contact-info__row" href={`tel:${phone.replace(/\s/g, '')}`}>
-                <span className="contact-info__icon"><Icon name="phone" size={18} /></span>
-                <span>
-                  <span className="contact-info__label">Phone</span>
-                  {phone}
-                </span>
-              </a>
-            )}
-            {email && (
-              <a className="contact-info__row" href={`mailto:${email}`}>
-                <span className="contact-info__icon"><Icon name="mail" size={18} /></span>
-                <span>
-                  <span className="contact-info__label">Email</span>
-                  {email}
-                </span>
-              </a>
-            )}
-            {(settings?.offices || []).map((o) => (
-              <div className="contact-info__row" key={o.label}>
-                <span className="contact-info__icon"><Icon name="map-pin" size={18} /></span>
-                <span>
-                  <span className="contact-info__label">{o.label}</span>
-                  {o.address}
-                </span>
-              </div>
-            ))}
+            <div className="contact-info__panel">
+              <h3 className="contact-info__heading">Contact Info</h3>
+              <p className="contact-info__reply">
+                <Icon name="check" size={14} /> We reply within one business day
+              </p>
 
-            <ContactMap offices={settings?.offices || []} />
+              {phone && (
+                <a className="contact-info__row" href={`tel:${phone.replace(/\s/g, '')}`}>
+                  <span className="contact-info__icon"><Icon name="phone" size={18} /></span>
+                  <span>
+                    <span className="contact-info__label">Phone</span>
+                    {phone}
+                  </span>
+                </a>
+              )}
+              {email && (
+                <a className="contact-info__row" href={`mailto:${email}`}>
+                  <span className="contact-info__icon"><Icon name="mail" size={18} /></span>
+                  <span>
+                    <span className="contact-info__label">Email</span>
+                    {email}
+                  </span>
+                </a>
+              )}
+
+              {wa && (
+                <a href={wa} target="_blank" rel="noopener noreferrer" className="btn btn-wa contact-info__wa">
+                  <Icon name="whatsapp" size={18} /> Message us on WhatsApp
+                </a>
+              )}
+
+              <ContactMap offices={settings?.offices || []} />
+
+              {(settings?.offices || []).length > 0 && (
+                <div className="contact-info__offices">
+                  {settings.offices.map((o) => {
+                    const query = o.lat && o.lng ? `${o.lat},${o.lng}` : o.address;
+                    const mapHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+                    return (
+                      <div className="contact-info__office" key={o.label}>
+                        <span className="contact-info__icon"><Icon name="map-pin" size={18} /></span>
+                        <span>
+                          <span className="contact-info__label">{o.label}</span>
+                          {o.address}
+                          <a className="contact-info__directions" href={mapHref} target="_blank" rel="noopener noreferrer">
+                            Get directions <Icon name="arrow-right" size={14} />
+                          </a>
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              {(settings?.socials || []).length > 0 && (
+                <div className="contact-info__socials">
+                  {settings.socials.map((s) => (
+                    <a key={s.platform} href={s.url} target="_blank" rel="noopener noreferrer" aria-label={s.platform}>
+                      <Icon name={s.platform} size={18} />
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
           </aside>
         </div>
       </section>
