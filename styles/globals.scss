@@ -341,13 +341,12 @@ h4 {
   }
 }
 
-// Wordmark logo (public/Logo.png). `--light` inverts the dark logo to white
-// for use on navy backgrounds (footer, offcanvas, admin sidebar).
+// Wordmark logo (public/Logo.png). The width/height attributes set by
+// next/image control the rendered size — do NOT override them with width/height
+// auto here, or the image expands to its full intrinsic pixel size. `--light`
+// inverts the dark logo to white for navy backgrounds (footer, menu, admin).
 .site-logo {
   display: block;
-  width: auto;
-  height: auto;
-  max-width: 100%;
 }
 
 .site-logo--light {
