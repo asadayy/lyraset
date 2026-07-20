@@ -21,7 +21,10 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${displayFont.variable} ${bodyFont.variable}`}>
-      <body>{children}</body>
+      {/* suppressHydrationWarning: browser extensions (e.g. ColorZilla adds
+          cz-shortcut-listen) inject attributes on <body> before hydration,
+          which would otherwise trip a harmless hydration mismatch warning. */}
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }

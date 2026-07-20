@@ -106,7 +106,7 @@ export default function SiteHeader({ settings, services = [] }) {
       <div className="navbar-main">
         <div className="container-x navbar-main__inner">
           <Link href="/" className="brand" aria-label={`${brand} home`}>
-            <Logo height={32} priority />
+            <Logo height={44} priority />
           </Link>
 
           <nav className="nav-links" aria-label="Primary">
