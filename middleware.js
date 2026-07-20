@@ -6,7 +6,10 @@ import { withAuth } from 'next-auth/middleware';
  * additionally guarded server-side via requireAdmin() in each handler.
  */
 export default withAuth({
-  pages: { signIn: '/admin/login' },
+  pages: { signIn: '/admin/login', error: '/admin/login' },
+  secret:
+    process.env.NEXTAUTH_SECRET ||
+    (process.env.NODE_ENV !== 'production' ? 'lyraset-dev-only-secret-change-me' : undefined),
   callbacks: {
     authorized: ({ token }) => token?.role === 'admin',
   },

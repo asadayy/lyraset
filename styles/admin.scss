@@ -1,0 +1,639 @@
+// ===========================================================================
+// Admin CMS — dark sidebar, light workspace. Own visual language, same tokens.
+// ===========================================================================
+.admin {
+  display: grid;
+  grid-template-columns: 264px 1fr;
+  min-height: 100vh;
+  background: var(--grey-100);
+}
+
+@media (max-width: 900px) {
+  .admin {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ---- Sidebar --------------------------------------------------------------
+.admin-sidebar {
+  background: var(--navy-950);
+  color: rgba(255, 255, 255, 0.75);
+  padding: 1.25rem 1rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+@media (max-width: 900px) {
+  .admin-sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: 264px;
+    z-index: 1200;
+    transform: translateX(-100%);
+    transition: transform var(--dur) var(--ease-out);
+  }
+  .admin-sidebar.is-open {
+    transform: translateX(0);
+  }
+}
+
+.admin-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.75rem 1.25rem;
+  margin-bottom: 0.5rem;
+  border-bottom: var(--border-dark);
+}
+
+.admin-brand__name {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 800;
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+.admin-nav__section {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+  padding: 1rem 0.75rem 0.4rem;
+}
+
+.admin-nav__link {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--radius-sm);
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.92rem;
+  font-weight: 500;
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.admin-nav__link:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+
+.admin-nav__link.is-active {
+  background: var(--blue-600);
+  color: #fff;
+}
+
+.admin-nav__link svg {
+  flex: none;
+  opacity: 0.9;
+}
+
+.admin-nav__spacer {
+  flex: 1;
+}
+
+// ---- Topbar + workspace ---------------------------------------------------
+.admin-main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.admin-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1.5rem;
+  background: #fff;
+  border-bottom: 1px solid var(--grey-200);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.admin-topbar__title {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  margin: 0;
+}
+
+.admin-topbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.admin-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-pill);
+  background: var(--blue-100);
+  color: var(--blue-600);
+}
+
+.admin-badge--warn {
+  background: rgba(245, 158, 11, 0.14);
+  color: #b45309;
+}
+
+.admin-workspace {
+  padding: clamp(1.25rem, 3vw, 2rem);
+  max-width: 1100px;
+  width: 100%;
+}
+
+.admin-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--ink);
+}
+
+@media (max-width: 900px) {
+  .admin-menu-btn {
+    display: inline-flex;
+  }
+}
+
+// ---- Cards / panels -------------------------------------------------------
+.admin-panel {
+  background: #fff;
+  border: 1px solid var(--grey-200);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  margin-bottom: 1.5rem;
+}
+
+.admin-panel__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+}
+
+// ---- Login ----------------------------------------------------------------
+.admin-login {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: var(--navy-950);
+  padding: 1.5rem;
+}
+
+.admin-login__card {
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: 2.25rem;
+  box-shadow: var(--shadow-card);
+}
+
+.admin-login__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+
+// ---- Tables ---------------------------------------------------------------
+.admin-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--grey-200);
+  border-radius: var(--radius-lg);
+  background: #fff;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 620px;
+}
+
+.admin-table th,
+.admin-table td {
+  text-align: left;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--grey-200);
+  font-size: 0.92rem;
+  vertical-align: middle;
+}
+
+.admin-table th {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--grey-500);
+  background: var(--grey-100);
+}
+
+.admin-table tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-table tr:hover td {
+  background: rgba(27, 111, 242, 0.03);
+}
+
+.admin-row-actions {
+  display: flex;
+  gap: 0.4rem;
+  justify-content: flex-end;
+}
+
+// ---- Buttons / pills ------------------------------------------------------
+.admin-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.9rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.admin-btn--primary {
+  background: var(--blue-600);
+  color: #fff;
+}
+
+.admin-btn--primary:hover {
+  background: var(--blue-500);
+}
+
+.admin-btn--ghost {
+  background: #fff;
+  border-color: var(--grey-200);
+  color: var(--ink);
+}
+
+.admin-btn--ghost:hover {
+  border-color: var(--blue-500);
+  color: var(--blue-600);
+}
+
+.admin-btn--danger {
+  background: #fff;
+  border-color: rgba(229, 72, 77, 0.4);
+  color: var(--danger);
+}
+
+.admin-btn--danger:hover {
+  background: var(--danger);
+  color: #fff;
+}
+
+.admin-btn--sm {
+  padding: 0.4rem 0.7rem;
+  font-size: 0.82rem;
+}
+
+.admin-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+// ---- Status pills ---------------------------------------------------------
+.status-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.22rem 0.6rem;
+  border-radius: var(--radius-pill);
+  text-transform: capitalize;
+}
+
+.status-pill--new {
+  background: var(--blue-100);
+  color: var(--blue-600);
+}
+.status-pill--contacted,
+.status-pill--reviewed {
+  background: rgba(245, 158, 11, 0.14);
+  color: #b45309;
+}
+.status-pill--won,
+.status-pill--shortlisted {
+  background: rgba(22, 163, 74, 0.14);
+  color: var(--success);
+}
+.status-pill--archived,
+.status-pill--rejected {
+  background: var(--grey-200);
+  color: var(--grey-500);
+}
+
+// ---- Forms (admin) --------------------------------------------------------
+.admin-field {
+  margin-bottom: 1.1rem;
+}
+
+.admin-field > label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.88rem;
+  margin-bottom: 0.4rem;
+}
+
+.admin-field__hint {
+  font-size: 0.78rem;
+  color: var(--grey-500);
+  margin-top: 0.25rem;
+}
+
+.admin-input,
+.admin-textarea,
+.admin-select {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--grey-200);
+  border-radius: var(--radius-sm);
+  font: inherit;
+  background: #fff;
+  color: var(--ink);
+}
+
+.admin-input:focus,
+.admin-textarea:focus,
+.admin-select:focus {
+  outline: none;
+  border-color: var(--blue-500);
+  box-shadow: 0 0 0 3px rgba(27, 111, 242, 0.15);
+}
+
+.admin-textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.admin-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 640px) {
+  .admin-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.admin-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.admin-switch input {
+  width: 42px;
+  height: 24px;
+  appearance: none;
+  background: var(--grey-200);
+  border-radius: 999px;
+  position: relative;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+
+.admin-switch input::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  top: 3px;
+  left: 3px;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.admin-switch input:checked {
+  background: var(--blue-600);
+}
+
+.admin-switch input:checked::after {
+  transform: translateX(18px);
+}
+
+// ---- Repeatable list rows -------------------------------------------------
+.admin-repeat__row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.admin-repeat__row .admin-input,
+.admin-repeat__row .admin-textarea {
+  flex: 1;
+}
+
+// ---- Media picker ---------------------------------------------------------
+.media-picker {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.media-picker__preview {
+  width: 96px;
+  height: 96px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--grey-200);
+  flex: none;
+  background: var(--grey-100);
+}
+
+.media-picker__preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+// ---- Media library grid ---------------------------------------------------
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.media-tile {
+  border: 1px solid var(--grey-200);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #fff;
+}
+
+.media-tile__thumb {
+  aspect-ratio: 1;
+  background: var(--grey-100);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.media-tile__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.media-tile__meta {
+  padding: 0.5rem 0.6rem;
+  font-size: 0.72rem;
+  color: var(--grey-500);
+  display: flex;
+  justify-content: space-between;
+  gap: 0.25rem;
+}
+
+// ---- Dashboard stats ------------------------------------------------------
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.admin-stat {
+  background: #fff;
+  border: 1px solid var(--grey-200);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+}
+
+.admin-stat__value {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 800;
+  font-size: 2rem;
+  color: var(--blue-600);
+}
+
+.admin-stat__label {
+  color: var(--grey-500);
+  font-size: 0.9rem;
+}
+
+// ---- Section editor (pages) ----------------------------------------------
+.section-editor__item {
+  border: 1px solid var(--grey-200);
+  border-radius: var(--radius);
+  margin-bottom: 0.75rem;
+  background: #fff;
+}
+
+.section-editor__head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+}
+
+.section-editor__grip {
+  cursor: grab;
+  color: var(--grey-400);
+}
+
+.section-editor__type {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.section-editor__badge {
+  font-size: 0.7rem;
+  color: var(--grey-500);
+  background: var(--grey-100);
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-pill);
+}
+
+.section-editor__body {
+  padding: 0 1rem 1rem;
+  border-top: 1px solid var(--grey-200);
+}
+
+.section-editor__item.is-dragging {
+  opacity: 0.5;
+  border-color: var(--blue-500);
+}
+
+// ---- Toast ----------------------------------------------------------------
+.admin-toast {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 2000;
+  background: var(--ink);
+  color: #fff;
+  padding: 0.85rem 1.25rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  animation: toast-in 0.3s var(--ease-out);
+}
+
+.admin-toast--error {
+  background: var(--danger);
+}
+
+.admin-toast--success {
+  background: var(--success);
+}
+
+@keyframes toast-in {
+  from {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+}
+
+// ---- Empty state ----------------------------------------------------------
+.admin-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--grey-500);
+}
+
+.admin-empty__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--grey-100);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  color: var(--grey-400);
+}
+
+// ---- Demo banner ----------------------------------------------------------
+.admin-demo-banner {
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: #92400e;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius);
+  font-size: 0.88rem;
+  margin-bottom: 1.5rem;
+}
