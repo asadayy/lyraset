@@ -92,4 +92,120 @@ styles/         globals.scss (Bootstrap build + tokens) + per-component SCSS
 
 Environment variables are documented in [`.env.example`](.env.example).
 
-Deployment steps are at the end of this file (see **Deploy to Vercel**).
+---
+
+## How "everything is editable" works
+
+Nothing on the public site is hardcoded. Content flows:
+
+```
+Admin (/admin) ──PUT/POST──▶ /api/** ──▶ MongoDB ──▶ revalidateTag(...)
+                                                          │
+Public page (RSC) ◀── lib/data.js (unstable_cache tags) ◀─┘
+```
+
+- **Content lives in the database.** `lib/data.js` reads it in Server
+  Components; every read is wrapped in `unstable_cache` with a tag (`services`,
+  `pages`, …).
+- **Saving from the CMS revalidates instantly.** Each mutating API route calls
+  `revalidateTag`, so statically-rendered pages refresh within seconds.
+- **Composable pages.** A `Page` is an ordered list of **section records**
+  (`hero`, `statsBar`, `servicesGrid`, `processTimeline`, `testimonialSlider`,
+  `richText`, …). The admin edits any field, toggles visibility, drags to
+  reorder, and adds new section instances — all with zero code changes, via the
+  schema-driven editor (`lib/admin/sectionSchemas.js`).
+- **Seed fallback.** With no `MONGODB_URI`, `lib/data.js` and the admin list
+  endpoints return the bundled seed content (`lib/seed/*`) so the site is fully
+  browsable out of the box (read-only).
+
+### Media
+
+All images/video/PDF go to **Cloudinary** via server-**signed** direct uploads
+(`/api/upload` → browser → Cloudinary), so the API secret never reaches the
+client and large files never pass through the serverless function. `next/image`
+uses a custom loader (`lib/cloudinaryLoader.js`) that appends `f_auto,q_auto` +
+width-limited transforms to every image.
+
+---
+
+## Performance
+
+- **SSG/ISR** for all public pages (`revalidate = 3600`) + on-demand
+  revalidation from the CMS.
+- **First-load JS ≈ 143 kB** (uncompressed) on every public page, under the
+  170 kB budget. Framer-Motion sections (hero, stats, testimonials) are
+  `next/dynamic`-split, so they lazy-load and never sit in first-load JS
+  (verified: the home page is no heavier than a plain rich-text page).
+- **Zero CLS:** every image renders in a fixed-ratio box (`MediaImage`); the
+  hero image is `priority`.
+- **Animations** are lazy (GSAP dynamically imported), compositor-only
+  (transform/opacity), and every effect respects `prefers-reduced-motion` and
+  disables heavy parallax/magnetic effects below 992 px.
+- Trimmed Bootstrap SCSS build (only the modules used); per-component
+  stylesheets in `/styles`.
+
+Run `npm run analyze` for a bundle report.
+
+---
+
+## Accessibility
+
+Semantic landmarks + skip link, keyboard-navigable menu/carousel, visible focus
+rings, `aria-live` form feedback, required alt text on every media asset in the
+CMS, and contrast-checked color tokens.
+
+---
+
+## SEO
+
+- Metadata API wired to the CMS (`lib/metadata.js`); per-entity overrides on
+  services, case studies, and jobs.
+- `sitemap.xml` + `robots.txt` generated from published content.
+- JSON-LD: `Organization` (both offices), `Service`, `JobPosting`,
+  `BreadcrumbList`.
+- Canonical URLs, OpenGraph + Twitter cards, human-readable slugs.
+
+---
+
+## Deploy to Vercel
+
+1. **Push to GitHub** (this repo).
+2. **Import the repo** into Vercel. Framework preset: Next.js (defaults are
+   fine). Set the region to **`bom1`** (Mumbai) for the Pakistan/Gulf audience
+   under Project → Settings → Functions.
+3. **Add environment variables** (Project → Settings → Environment Variables) —
+   the same keys as [`.env.example`](.env.example):
+
+   | Variable | Notes |
+   | --- | --- |
+   | `MONGODB_URI` | Atlas SRV string; allow-list `0.0.0.0/0` for Vercel |
+   | `CLOUDINARY_CLOUD_NAME` / `CLOUDINARY_API_KEY` / `CLOUDINARY_API_SECRET` | server-only |
+   | `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` | exposed for the image loader |
+   | `NEXTAUTH_SECRET` | `openssl rand -base64 32` |
+   | `NEXTAUTH_URL` | your production URL |
+   | `ADMIN_EMAIL` / `ADMIN_PASSWORD_HASH` | `node scripts/hash-password.js "…"` |
+   | `NEXT_PUBLIC_SITE_URL` | your production URL (canonical/sitemap) |
+   | `REVALIDATE_SECRET` | random string |
+   | `RESEND_API_KEY` / `LEAD_NOTIFY_EMAIL` | optional email notifications |
+   | `NEXT_PUBLIC_GA4_ID` / `NEXT_PUBLIC_META_PIXEL_ID` | optional analytics |
+
+4. **Seed the database** once (locally, pointing at the production Atlas URI, or
+   via a one-off script run): `npm run seed`.
+5. **Deploy.** After the first deploy, verify: a public page loads, `/admin/login`
+   signs in, editing a service saves and the public page updates within seconds,
+   an image upload lands in Cloudinary and the Media Library, and a contact-form
+   submission appears in the Leads inbox.
+
+> **Note on serverless:** there are no runtime filesystem writes — uploads go
+> straight to Cloudinary — so everything works on Vercel's serverless runtime.
+
+---
+
+## What was verified
+
+`npm run build` is green (all routes compile/prerender). Runtime-smoke-tested in
+production mode (`npm start`): every public page returns 200 with seeded content;
+form validation, honeypot, and rate-limiting behave; admin API routes require
+auth (401) and the login page renders; `sitemap.xml`/`robots.txt` emit correctly.
+Full Lighthouse runs require a deployed URL with the database + Cloudinary
+connected — run them post-deploy and record the numbers here.
