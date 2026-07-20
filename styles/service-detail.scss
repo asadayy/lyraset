@@ -1,0 +1,135 @@
+// Service detail page.
+.service-hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.service-hero__glow {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(27, 111, 242, 0.45), transparent 70%);
+  top: -160px;
+  right: -100px;
+}
+
+.service-hero__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+@media (max-width: 992px) {
+  .service-hero__inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+.service-hero__eyebrow {
+  color: var(--blue-400);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+}
+
+.service-hero__chip {
+  width: 36px;
+  height: 36px;
+}
+
+.service-hero__title {
+  color: #fff;
+  margin: 0 0 1.25rem;
+}
+
+.service-hero__desc {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  max-width: 52ch;
+  margin-bottom: 2rem;
+}
+
+.service-hero__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+}
+
+// ---- Body: deliverables + form -------------------------------------------
+.service-body__grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .service-body__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.deliverables-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.deliverable {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1rem 1.25rem;
+  background: var(--grey-100);
+  border-radius: var(--radius);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.deliverable__check {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--blue-100);
+  color: var(--blue-600);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.service-extra {
+  margin-top: 2rem;
+}
+
+.service-extra__block {
+  margin-bottom: 1.5rem;
+}
+
+.service-extra__block h3 {
+  font-size: 1.25rem;
+  margin: 0 0 0.5rem;
+}
+
+.service-extra__block p {
+  color: var(--grey-500);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.service-form-card {
+  position: sticky;
+  top: 100px;
+  background: #fff;
+  border: 1px solid var(--grey-200);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+}

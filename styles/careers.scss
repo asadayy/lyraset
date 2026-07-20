@@ -1,0 +1,182 @@
+// Careers index + job detail + application.
+.jobs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.job-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.75rem;
+  background: #fff;
+  border: 1px solid var(--grey-200);
+  border-radius: var(--radius-lg);
+  transition:
+    transform var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out);
+}
+
+.job-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card);
+  border-color: rgba(27, 111, 242, 0.3);
+}
+
+@media (max-width: 640px) {
+  .job-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.job-card__title {
+  font-size: 1.35rem;
+  margin: 0 0 0.6rem;
+}
+
+.job-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.job-card__loc {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--grey-500);
+  font-size: 0.9rem;
+}
+
+.job-card__summary {
+  color: var(--grey-500);
+  line-height: 1.6;
+  margin: 0;
+  max-width: 70ch;
+}
+
+.job-card__cta {
+  flex: none;
+}
+
+// ---- Careers apply block --------------------------------------------------
+.careers-apply {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .careers-apply {
+    grid-template-columns: 1fr;
+  }
+}
+
+.careers-apply__form {
+  background: #fff;
+  border: 1px solid var(--grey-200);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+// ---- Job detail -----------------------------------------------------------
+.job-detail__hero {
+  padding-bottom: 1.5rem;
+}
+
+.job-detail__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.job-detail__open,
+.job-detail__closed {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-pill);
+}
+
+.job-detail__open {
+  background: rgba(22, 163, 74, 0.12);
+  color: var(--success);
+}
+
+.job-detail__closed {
+  background: rgba(229, 72, 77, 0.12);
+  color: var(--danger);
+}
+
+.job-detail__body {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .job-detail__body {
+    grid-template-columns: 1fr;
+  }
+}
+
+.job-detail__summary {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--ink);
+  margin-bottom: 2rem;
+}
+
+.job-detail__block {
+  margin-bottom: 2rem;
+}
+
+.job-detail__block h2 {
+  font-size: 1.4rem;
+  margin: 0 0 1rem;
+}
+
+.job-detail__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.job-detail__list li {
+  display: flex;
+  gap: 0.75rem;
+  color: var(--grey-500);
+  line-height: 1.6;
+}
+
+.job-detail__list svg {
+  color: var(--blue-600);
+  flex: none;
+  margin-top: 3px;
+}
+
+.job-detail__apply-card {
+  position: sticky;
+  top: 100px;
+  background: var(--grey-100);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.5rem, 3vw, 2rem);
+}
+
+.job-detail__apply-card h3 {
+  margin: 0 0 1.25rem;
+  font-size: 1.3rem;
+}

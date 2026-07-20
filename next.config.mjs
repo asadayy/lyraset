@@ -12,15 +12,11 @@ const nextConfig = {
   // Lint is run explicitly via `npm run lint`; it does not gate production builds.
   eslint: { ignoreDuringBuilds: true },
   images: {
-    // Custom Cloudinary loader is wired per-<Image> via lib/cloudinaryLoader.
-    // Remote patterns still declared so any direct Cloudinary URLs are allowed.
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'res.cloudinary.com',
-      },
-    ],
-    formats: ['image/avif', 'image/webp'],
+    // Global custom loader: every <Image> is served through Cloudinary with
+    // f_auto,q_auto + width-limited transforms. Local /public assets and
+    // non-Cloudinary URLs are returned untouched by the loader.
+    loader: 'custom',
+    loaderFile: './lib/cloudinaryLoader.js',
     deviceSizes: [360, 480, 640, 768, 1024, 1280, 1536, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },

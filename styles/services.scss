@@ -1,0 +1,144 @@
+// Services grid + cards + services index page.
+.services-grid-section {
+  position: relative;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+@media (max-width: 900px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.service-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  height: 100%;
+  padding: 1.6rem;
+  background: #fff;
+  border: 1px solid var(--grey-200);
+  border-radius: var(--radius-lg);
+  color: var(--ink);
+  overflow: hidden;
+  transition:
+    transform var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out);
+}
+
+.service-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 80% at 100% 0%, rgba(27, 111, 242, 0.08), transparent 60%);
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease-out);
+  pointer-events: none;
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-card);
+  border-color: rgba(27, 111, 242, 0.35);
+  color: var(--ink);
+}
+
+.service-card:hover::after {
+  opacity: 1;
+}
+
+.service-card__icon {
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.service-card:hover .service-card__icon {
+  transform: rotate(-8deg) scale(1.05);
+}
+
+.service-card__title {
+  font-size: 1.25rem;
+  margin: 0.25rem 0 0;
+}
+
+.service-card__blurb {
+  color: var(--grey-500);
+  line-height: 1.55;
+  margin: 0;
+  font-size: 0.95rem;
+  flex: 1;
+}
+
+.service-card__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--blue-600);
+  margin-top: 0.5rem;
+}
+
+.service-card:hover .service-card__more svg {
+  transform: translateX(4px);
+}
+
+.service-card__more svg {
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.service-card.is-featured {
+  background: linear-gradient(180deg, #fff, var(--blue-100));
+}
+
+.service-card__badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--blue-600);
+  color: #fff;
+  padding: 0.28rem 0.6rem;
+  border-radius: var(--radius-pill);
+}
+
+.services-grid__foot {
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+// ---- Services index page hero list ---------------------------------------
+.services-index__list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-top: 3rem;
+}
+
+@media (max-width: 900px) {
+  .services-index__list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .services-index__list {
+    grid-template-columns: 1fr;
+  }
+}

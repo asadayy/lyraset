@@ -1,0 +1,234 @@
+// Portfolio grid + cards + case study detail.
+.portfolio-section {
+  position: relative;
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 1000px) {
+  .portfolio-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.case-card {
+  display: block;
+  color: var(--ink);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--grey-200);
+  background: #fff;
+  transition:
+    transform var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out);
+}
+
+.case-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-card);
+  color: var(--ink);
+}
+
+.case-card__media {
+  position: relative;
+  overflow: hidden;
+}
+
+.case-card__media .media-box {
+  transition: transform 0.6s var(--ease-out);
+}
+
+.case-card:hover .case-card__media .media-box {
+  transform: scale(1.06);
+}
+
+.case-card__tag {
+  position: absolute;
+  top: 0.9rem;
+  left: 0.9rem;
+  z-index: 2;
+  background: rgba(10, 22, 40, 0.75);
+  color: #fff;
+  backdrop-filter: blur(6px);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-pill);
+  transform: translateY(-4px);
+  opacity: 0;
+  transition:
+    transform var(--dur) var(--ease-out),
+    opacity var(--dur) var(--ease-out);
+}
+
+.case-card:hover .case-card__tag {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.case-card__body {
+  padding: 1.4rem 1.5rem 1.6rem;
+}
+
+.case-card__title {
+  font-size: 1.2rem;
+  margin: 0 0 0.4rem;
+}
+
+.case-card__summary {
+  color: var(--grey-500);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  margin: 0 0 0.85rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.case-card__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--blue-600);
+}
+
+// ---- Filter bar -----------------------------------------------------------
+.portfolio-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.portfolio-filter {
+  border: 1px solid var(--grey-200);
+  background: #fff;
+  color: var(--grey-500);
+  padding: 0.5rem 1.1rem;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+
+.portfolio-filter:hover {
+  border-color: var(--blue-500);
+  color: var(--blue-600);
+}
+
+.portfolio-filter.is-active {
+  background: var(--blue-600);
+  border-color: var(--blue-600);
+  color: #fff;
+}
+
+// ---- Case study detail ----------------------------------------------------
+.case-detail__hero {
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.case-detail__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.case-detail__cover {
+  margin-top: 2.5rem;
+}
+
+.case-detail__body {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .case-detail__body {
+    grid-template-columns: 1fr;
+  }
+}
+
+.case-block {
+  margin-bottom: 2rem;
+}
+
+.case-block h3 {
+  font-size: 1.35rem;
+  margin: 0 0 0.6rem;
+}
+
+.case-block p {
+  color: var(--grey-500);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.case-metrics {
+  position: sticky;
+  top: 100px;
+  background: var(--navy-950);
+  color: #fff;
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+}
+
+.case-metrics h4 {
+  color: #fff;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0 0 1.25rem;
+}
+
+.case-metric {
+  padding-block: 0.85rem;
+  border-top: var(--border-dark);
+}
+
+.case-metric:first-of-type {
+  border-top: none;
+}
+
+.case-metric__value {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 800;
+  font-size: 1.9rem;
+  color: var(--blue-400);
+  line-height: 1;
+}
+
+.case-metric__label {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+.case-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 2.5rem;
+}

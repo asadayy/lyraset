@@ -1,0 +1,169 @@
+// Team grid + cards.
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+@media (max-width: 1000px) {
+  .team-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 460px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.team-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--grey-200);
+  transition:
+    transform var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out);
+}
+
+.team-card:hover,
+.team-card:focus-visible {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-card);
+  outline: none;
+}
+
+.team-card__media {
+  position: relative;
+  overflow: hidden;
+}
+
+.team-card__badge {
+  position: absolute;
+  top: 0.8rem;
+  left: 0.8rem;
+  z-index: 2;
+  background: var(--blue-600);
+  color: #fff;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-pill);
+}
+
+.team-card__skills {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: linear-gradient(180deg, rgba(10, 22, 40, 0.4), rgba(10, 22, 40, 0.92));
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.25rem;
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity var(--dur) var(--ease-out),
+    transform var(--dur) var(--ease-out);
+}
+
+.team-card:hover .team-card__skills,
+.team-card:focus-visible .team-card__skills {
+  opacity: 1;
+  transform: none;
+}
+
+.team-card__skills-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--blue-400);
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+
+.team-card__skills ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.team-card__skills li {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.team-card__info {
+  padding: 1.1rem 1.25rem 1.35rem;
+}
+
+.team-card__name {
+  font-size: 1.15rem;
+  margin: 0 0 0.2rem;
+}
+
+.team-card__role {
+  color: var(--blue-600);
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+// ---- Team member bio list (team page) -------------------------------------
+.team-bios {
+  margin-top: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.team-bio {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 2rem;
+  padding: 1.75rem;
+  background: var(--grey-100);
+  border-radius: var(--radius-lg);
+  align-items: center;
+}
+
+@media (max-width: 700px) {
+  .team-bio {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+}
+
+.team-bio__name {
+  font-size: 1.4rem;
+  margin: 0 0 0.25rem;
+}
+
+.team-bio__role {
+  color: var(--blue-600);
+  font-weight: 600;
+  margin: 0 0 0.75rem;
+}
+
+.team-bio__text {
+  color: var(--grey-500);
+  line-height: 1.7;
+  margin: 0;
+}

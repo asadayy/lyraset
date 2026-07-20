@@ -1,0 +1,46 @@
+// MediaImage — fixed-ratio box (zero CLS) + branded placeholder.
+.media-box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--ratio, 16 / 9);
+  overflow: hidden;
+  background: var(--navy-800);
+}
+
+.media-box.is-rounded {
+  border-radius: var(--radius);
+}
+
+.media-box__img {
+  object-fit: cover;
+}
+
+.media-box__placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(120% 120% at 20% 10%, rgba(47, 132, 255, 0.35), transparent 55%),
+    linear-gradient(140deg, var(--navy-800), var(--navy-950));
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.media-box__initials {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.6rem, 5vw, 2.6rem);
+  letter-spacing: 0.04em;
+  z-index: 1;
+  opacity: 0.92;
+}
+
+.media-box__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(120% 120% at 50% 0%, #000, transparent 75%);
+}
