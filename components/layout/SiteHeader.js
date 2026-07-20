@@ -26,9 +26,24 @@ export default function SiteHeader({ settings, services = [] }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
 
+  // Collapse the utility bar on scroll — with hysteresis. Collapsing removes the
+  // bar's height (44px) from the document, which nudges scrollY; a single
+  // threshold would let that nudge bounce the page back across the line and
+  // flicker forever. Two thresholds with a gap wider than the bar's height make
+  // that impossible: once collapsed, scrollY can't fall back under 24.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
+    let collapsed = window.scrollY > 90;
+    setScrolled(collapsed);
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (!collapsed && y > 90) {
+        collapsed = true;
+        setScrolled(true);
+      } else if (collapsed && y < 24) {
+        collapsed = false;
+        setScrolled(false);
+      }
+    };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
