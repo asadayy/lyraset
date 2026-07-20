@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write \"**/*.{js,jsx,scss,md}\"",
-    "seed": "node --env-file=.env.local scripts/seed.js",
+    "seed": "node --env-file=.env.local scripts/seed.mjs",
     "analyze": "cross-env ANALYZE=true next build"
   },
   "dependencies": {
