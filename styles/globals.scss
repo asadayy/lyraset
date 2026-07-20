@@ -1,0 +1,342 @@
+// ===========================================================================
+// LYRASET — Global stylesheet
+// Builds a trimmed Bootstrap 5 from SCSS (only the modules the site uses),
+// themed via Sass-variable overrides, plus the base element styles and shared
+// utility classes. This is the ONLY file that imports Bootstrap; component
+// stylesheets consume the design tokens exposed here.
+// ===========================================================================
+
+// 1. Bootstrap configuration ------------------------------------------------
+@import 'bootstrap/scss/functions';
+
+// Brand tokens (Sass vars + :root custom properties)
+@import 'tokens';
+
+// ---- Override Bootstrap Sass variables ------------------------------------
+$primary: $blue-600;
+$secondary: $navy-800;
+$success: $success;
+$danger: $danger;
+$warning: $warning;
+$dark: $navy-950;
+$light: $grey-100;
+
+$body-bg: $white;
+$body-color: $ink;
+
+$font-family-sans-serif: $font-body;
+$headings-font-family: $font-display;
+$headings-font-weight: 800;
+$headings-color: $ink;
+$headings-line-height: 1.08;
+
+$border-radius: $radius-sm;
+$border-radius-sm: 8px;
+$border-radius-lg: $radius;
+$border-radius-xl: $radius-lg;
+$border-radius-pill: $radius-pill;
+
+$link-color: $blue-600;
+$link-hover-color: $blue-500;
+$link-decoration: none;
+$link-hover-decoration: none;
+
+$grid-gutter-width: 1.5rem;
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1240px,
+);
+
+// Buttons
+$btn-font-weight: 700;
+$btn-padding-y: 0.75rem;
+$btn-padding-x: 1.5rem;
+$btn-border-radius: $radius-pill;
+$btn-border-radius-lg: $radius-pill;
+$btn-border-radius-sm: $radius-pill;
+$btn-focus-width: 0.2rem;
+
+// Forms
+$input-padding-y: 0.75rem;
+$input-padding-x: 1rem;
+$input-border-radius: $radius-sm;
+$input-border-color: $grey-200;
+$input-focus-border-color: $blue-500;
+$input-focus-box-shadow: 0 0 0 0.2rem rgba(27, 111, 242, 0.15);
+$form-label-font-weight: 600;
+
+// Trim feature flags for a lighter build
+$enable-shadows: false;
+$enable-gradients: false;
+$enable-rounded: true;
+$enable-smooth-scroll: true;
+
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/variables-dark';
+@import 'bootstrap/scss/maps';
+@import 'bootstrap/scss/mixins';
+@import 'bootstrap/scss/utilities';
+
+// 2. Layout & components (only what the site actually uses) -----------------
+@import 'bootstrap/scss/root';
+@import 'bootstrap/scss/reboot';
+@import 'bootstrap/scss/type';
+@import 'bootstrap/scss/images';
+@import 'bootstrap/scss/containers';
+@import 'bootstrap/scss/grid';
+@import 'bootstrap/scss/tables';
+@import 'bootstrap/scss/forms';
+@import 'bootstrap/scss/buttons';
+@import 'bootstrap/scss/transitions';
+@import 'bootstrap/scss/dropdown';
+@import 'bootstrap/scss/nav';
+@import 'bootstrap/scss/navbar';
+@import 'bootstrap/scss/card';
+@import 'bootstrap/scss/badge';
+@import 'bootstrap/scss/alert';
+@import 'bootstrap/scss/close';
+@import 'bootstrap/scss/modal';
+@import 'bootstrap/scss/offcanvas';
+@import 'bootstrap/scss/spinners';
+
+// 3. Utilities API (generates the .d-flex, .text-center, spacing, etc.) -----
+@import 'bootstrap/scss/helpers';
+@import 'bootstrap/scss/utilities/api';
+
+// ===========================================================================
+// Base element styles
+// ===========================================================================
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: $font-body;
+  background: var(--white);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: $font-display;
+  letter-spacing: -0.02em;
+}
+
+// Fluid display scale
+.display-hero {
+  font-family: $font-display;
+  font-weight: 800;
+  font-size: clamp(2.6rem, 6.2vw, 5rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.display-xl {
+  font-family: $font-display;
+  font-weight: 800;
+  font-size: clamp(2.1rem, 4.6vw, 3.4rem);
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+}
+
+.display-lg {
+  font-family: $font-display;
+  font-weight: 800;
+  font-size: clamp(1.7rem, 3.4vw, 2.6rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.eyebrow {
+  font-family: $font-body;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--blue-600);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lead-muted {
+  color: var(--grey-500);
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  line-height: 1.7;
+}
+
+// ---- Section rhythm -------------------------------------------------------
+.section {
+  padding-block: var(--section-py);
+  position: relative;
+}
+
+.section--dark {
+  background: var(--navy-950);
+  color: rgba(255, 255, 255, 0.86);
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: #fff;
+  }
+}
+
+.section--grey {
+  background: var(--grey-100);
+}
+
+.text-accent {
+  color: var(--blue-600);
+}
+
+.container-x {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: clamp(1.1rem, 4vw, 2rem);
+}
+
+// ---- Shared button treatments (extend Bootstrap) --------------------------
+.btn {
+  --bs-btn-font-family: #{$font-body};
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 700;
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+}
+
+.btn-primary {
+  --bs-btn-color: #fff;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-active-color: #fff;
+  box-shadow: 0 8px 24px rgba(27, 111, 242, 0.28);
+}
+
+.btn-primary:hover {
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-2px);
+}
+
+.btn-ghost {
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: transparent;
+}
+
+.btn-ghost:hover {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.btn-ghost-dark {
+  color: var(--ink);
+  border: 1px solid var(--grey-200);
+  background: transparent;
+}
+
+.btn-ghost-dark:hover {
+  border-color: var(--blue-600);
+  color: var(--blue-600);
+  transform: translateY(-2px);
+}
+
+.btn .btn-arrow {
+  display: inline-block;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.btn:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+// ---- Icon chip ------------------------------------------------------------
+.icon-chip {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--blue-100);
+  color: var(--blue-600);
+  flex: none;
+}
+
+.section--dark .icon-chip {
+  background: rgba(27, 111, 242, 0.16);
+  color: var(--blue-400);
+}
+
+// ---- Utility helpers ------------------------------------------------------
+.glow-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.chip-tag {
+  display: inline-block;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--blue-100);
+  color: var(--blue-600);
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  z-index: 2000;
+  background: var(--blue-600);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0 0 var(--radius-sm) 0;
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+:focus-visible {
+  outline: 3px solid var(--blue-500);
+  outline-offset: 2px;
+}
+
+// Respect reduced-motion globally as a baseline safety net
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

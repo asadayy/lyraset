@@ -1,0 +1,42 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+Thumbs.db
+
+# debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# local env files (keep the documented example)
+.env
+.env*.local
+.env.development
+.env.production
+!.env.example
+
+# vercel
+.vercel
+
+# editors
+.idea/
+.vscode/
+*.swp
+
+# testing / analysis
+/coverage
+.next/analyze

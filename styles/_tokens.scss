@@ -1,0 +1,94 @@
+// ---------------------------------------------------------------------------
+// LYRASET — Design tokens
+// Single source of truth for the brand palette, spacing, radii, shadows, and
+// motion primitives. Exposed both as Sass variables (to configure Bootstrap)
+// and as CSS custom properties (consumed everywhere in component stylesheets).
+// ---------------------------------------------------------------------------
+
+// ---- Brand palette (Sass) -------------------------------------------------
+$navy-950: #0a1628;
+$navy-900: #0d1d33;
+$navy-800: #12294a;
+$navy-700: #1a3a63;
+
+$blue-600: #1b6ff2;
+$blue-500: #2f84ff;
+$blue-400: #5aa0ff;
+$blue-100: #e8f1ff;
+
+$white: #ffffff;
+$grey-100: #f4f7fb;
+$grey-200: #e6edf6;
+$grey-400: #94a3b8;
+$grey-500: #64748b;
+$ink: #0b1220;
+
+$success: #16a34a;
+$danger: #e5484d;
+$warning: #f59e0b;
+
+// ---- Type ----------------------------------------------------------------
+$font-display: var(--font-display), 'Segoe UI', system-ui, sans-serif;
+$font-body: var(--font-body), 'Segoe UI', system-ui, sans-serif;
+
+// ---- Radii / spacing / shadows -------------------------------------------
+$radius-sm: 10px;
+$radius: 14px;
+$radius-lg: 20px;
+$radius-pill: 999px;
+
+$shadow-soft: 0 10px 30px rgba(11, 18, 32, 0.08);
+$shadow-card: 0 18px 48px rgba(11, 18, 32, 0.1);
+$shadow-glow: 0 12px 40px rgba(27, 111, 242, 0.35);
+
+// ---- Motion tokens (mirrored in animations.scss + lib/motion.js) ---------
+$ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+$ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+$dur-fast: 0.18s;
+$dur: 0.42s;
+$dur-slow: 0.7s;
+
+// ---- CSS custom properties (runtime tokens) ------------------------------
+:root {
+  --navy-950: #{$navy-950};
+  --navy-900: #{$navy-900};
+  --navy-800: #{$navy-800};
+  --navy-700: #{$navy-700};
+
+  --blue-600: #{$blue-600};
+  --blue-500: #{$blue-500};
+  --blue-400: #{$blue-400};
+  --blue-100: #{$blue-100};
+
+  --white: #{$white};
+  --grey-100: #{$grey-100};
+  --grey-200: #{$grey-200};
+  --grey-400: #{$grey-400};
+  --grey-500: #{$grey-500};
+  --ink: #{$ink};
+
+  --success: #{$success};
+  --danger: #{$danger};
+  --warning: #{$warning};
+
+  --radius-sm: #{$radius-sm};
+  --radius: #{$radius};
+  --radius-lg: #{$radius-lg};
+  --radius-pill: #{$radius-pill};
+
+  --shadow-soft: #{$shadow-soft};
+  --shadow-card: #{$shadow-card};
+  --shadow-glow: #{$shadow-glow};
+
+  --border-dark: 1px solid rgba(255, 255, 255, 0.08);
+  --border-light: 1px solid #{$grey-200};
+
+  --ease-out: #{$ease-out};
+  --ease-in-out: #{$ease-in-out};
+  --dur-fast: #{$dur-fast};
+  --dur: #{$dur};
+  --dur-slow: #{$dur-slow};
+
+  --container-max: 1200px;
+  --section-py: clamp(3.5rem, 8vw, 7rem);
+}
