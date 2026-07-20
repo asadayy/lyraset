@@ -340,3 +340,16 @@ h4 {
     scroll-behavior: auto !important;
   }
 }
+
+// Wordmark logo (public/Logo.png). `--light` inverts the dark logo to white
+// for use on navy backgrounds (footer, offcanvas, admin sidebar).
+.site-logo {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+}
+
+.site-logo--light {
+  filter: brightness(0) invert(1);
+}

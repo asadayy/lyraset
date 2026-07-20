@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Icon from '@/components/Icon';
+import Logo from '@/components/Logo';
 import '@/styles/footer.scss';
 
 /**
@@ -17,9 +18,8 @@ export default function Footer({ settings, services = [] }) {
         <div className="site-footer__grid">
           {/* Brand */}
           <div className="site-footer__brand">
-            <Link href="/" className="brand">
-              <span className="brand__mark" aria-hidden="true" />
-              <span className="brand__name">{brand}</span>
+            <Link href="/" className="brand" aria-label={`${brand} home`}>
+              <Logo light height={32} />
             </Link>
             <p className="site-footer__tagline">{settings?.footerTagline || settings?.tagline}</p>
             <Link href="/contact" className="btn btn-primary">

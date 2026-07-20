@@ -2,8 +2,8 @@
 /**
  * Seed the MongoDB database with LYRASET starter content.
  *
- * Usage:  npm run seed         (loads .env.local via --env-file)
- *   or:   node --env-file=.env.local scripts/seed.mjs
+ * Usage:  npm run seed         (loads .env via --env-file)
+ *   or:   node --env-file=.env scripts/seed.mjs
  *
  * Idempotent: singletons are upserted; content collections are replaced with
  * the seed set. Safe to re-run. Requires MONGODB_URI. Creates the admin user
@@ -35,7 +35,7 @@ import seoDefault from '../lib/seed/seo.js';
 async function main() {
   const uri = process.env.MONGODB_URI;
   if (!uri) {
-    console.error('✖ MONGODB_URI is not set. Add it to .env.local before seeding.');
+    console.error('✖ MONGODB_URI is not set. Add it to .env before seeding.');
     process.exit(1);
   }
 

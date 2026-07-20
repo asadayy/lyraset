@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
+import Logo from '@/components/Logo';
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -30,8 +31,7 @@ export default function AdminLoginPage() {
     <main className="admin-login">
       <form className="admin-login__card" onSubmit={handleSubmit}>
         <div className="admin-login__brand">
-          <span className="brand__mark" aria-hidden="true" />
-          <span className="brand__name">LYRASET</span>
+          <Logo height={30} priority />
         </div>
         <h1 style={{ fontSize: '1.4rem', margin: '0 0 0.25rem' }}>Admin sign in</h1>
         <p style={{ color: 'var(--grey-500)', margin: '0 0 1.5rem', fontSize: '0.9rem' }}>

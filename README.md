@@ -33,25 +33,28 @@ is stored in the database and editable from `/admin` without touching code.
 # 1. Install
 npm install --legacy-peer-deps
 
-# 2. Configure environment (optional for first run)
-cp .env.example .env.local
-
-# 3. Develop — works immediately from seed content
+# 2. Develop — works immediately from bundled seed content (no config needed)
 npm run dev        # http://localhost:3000
 ```
+
+To enable the database and CMS, create a **`.env`** file (gitignored) with the
+variables listed in the [Deploy to Vercel](#deploy-to-vercel) table, then follow
+the steps below.
 
 ### Enable the database + CMS
 
 1. Create a **MongoDB Atlas** cluster, a database user, and allow-list your IP
    (or `0.0.0.0/0` for Vercel). Copy the `mongodb+srv://…` string into
-   `MONGODB_URI` in `.env.local`.
+   `MONGODB_URI` in `.env` (include a database name, e.g. `…mongodb.net/lyraset`).
 2. Create a **Cloudinary** account. Copy the cloud name, API key, and API secret
    into the `CLOUDINARY_*` vars (and `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`).
 3. Generate admin credentials:
    ```bash
    node scripts/hash-password.js "your-strong-password"
-   # paste the printed ADMIN_PASSWORD_HASH into .env.local, set ADMIN_EMAIL
+   # paste the printed ADMIN_PASSWORD_HASH into .env, set ADMIN_EMAIL
    ```
+   `npm run seed` uses these to create the admin user in the database.
+   Authentication is **DB-only** — the admin record lives in MongoDB, not env.
 4. Set `NEXTAUTH_SECRET` (`openssl rand -base64 32`) and `REVALIDATE_SECRET`.
 5. Seed the database with the full starter content:
    ```bash
@@ -90,7 +93,8 @@ scripts/        seed + password hashing
 styles/         globals.scss (Bootstrap build + tokens) + per-component SCSS
 ```
 
-Environment variables are documented in [`.env.example`](.env.example).
+Environment variables are documented in the [Deploy to Vercel](#deploy-to-vercel)
+table below. Create a gitignored `.env` file with those keys for local use.
 
 ---
 
@@ -174,7 +178,7 @@ CMS, and contrast-checked color tokens.
    fine). Set the region to **`bom1`** (Mumbai) for the Pakistan/Gulf audience
    under Project → Settings → Functions.
 3. **Add environment variables** (Project → Settings → Environment Variables) —
-   the same keys as [`.env.example`](.env.example):
+   the same keys you set in `.env`:
 
    | Variable | Notes |
    | --- | --- |

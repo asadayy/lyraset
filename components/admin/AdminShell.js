@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import Icon from '@/components/Icon';
+import Logo from '@/components/Logo';
 
 const NAV = [
   {
@@ -70,8 +71,7 @@ export default function AdminShell({ children, dbConfigured, userEmail }) {
     <div className="admin">
       <aside className={`admin-sidebar ${open ? 'is-open' : ''}`}>
         <div className="admin-brand">
-          <span className="brand__mark" aria-hidden="true" />
-          <span className="admin-brand__name">LYRASET</span>
+          <Logo light height={26} />
         </div>
         <nav>
           {NAV.map((group) => (

@@ -2,7 +2,7 @@
 /**
  * Generate a bcrypt hash for an admin password.
  * Usage: node scripts/hash-password.js "your-strong-password"
- * Paste the output into ADMIN_PASSWORD_HASH in .env.local.
+ * Paste the output into ADMIN_PASSWORD_HASH in .env.
  */
 const bcrypt = require('bcryptjs');
 

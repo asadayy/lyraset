@@ -22,12 +22,11 @@ yarn-debug.log*
 yarn-error.log*
 *.log
 
-# local env files (keep the documented example)
+# local env files (never commit secrets)
 .env
 .env*.local
 .env.development
 .env.production
-!.env.example
 
 # vercel
 .vercel

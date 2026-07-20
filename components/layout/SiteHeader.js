@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Icon from '@/components/Icon';
+import Logo from '@/components/Logo';
 import '@/styles/navbar.scss';
 
 const NAV = [
@@ -105,8 +106,7 @@ export default function SiteHeader({ settings, services = [] }) {
       <div className="navbar-main">
         <div className="container-x navbar-main__inner">
           <Link href="/" className="brand" aria-label={`${brand} home`}>
-            <span className="brand__mark" aria-hidden="true" />
-            <span className="brand__name">{brand}</span>
+            <Logo height={32} priority />
           </Link>
 
           <nav className="nav-links" aria-label="Primary">
@@ -171,7 +171,7 @@ export default function SiteHeader({ settings, services = [] }) {
       {/* Mobile offcanvas */}
       <div className={`offcanvas-menu ${menuOpen ? 'is-open' : ''}`} role="dialog" aria-modal="true">
         <div className="offcanvas-menu__head">
-          <span className="brand__name">{brand}</span>
+          <Logo light height={26} />
           <button className="nav-toggle" onClick={() => setMenuOpen(false)} aria-label="Close menu">
             <Icon name="close" size={24} />
           </button>
