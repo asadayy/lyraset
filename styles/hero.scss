@@ -152,8 +152,10 @@
 
 @media (max-width: 992px) {
   .hero__visual {
-    order: -1;
+    // Text (.hero__content) comes first in the DOM; keep that order on mobile
+    // so the headline/CTAs lead and the graphic follows below.
     max-width: 420px;
+    margin-top: 0.5rem;
   }
 }
 
