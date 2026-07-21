@@ -45,19 +45,25 @@
   gap: clamp(2rem, 4vw, 3.5rem);
 }
 
+// Tablet + mobile: brand spans the top, the two link columns sit side by side,
+// and contact spans the bottom — compact and structured instead of one long list.
 @media (max-width: 900px) {
   .site-footer__grid {
     grid-template-columns: 1fr 1fr;
-    gap: 2.25rem;
+    gap: 2rem 1.5rem;
   }
-  .site-footer__brand {
+  .site-footer__brand,
+  .site-footer__contact {
     grid-column: 1 / -1;
   }
 }
 
-@media (max-width: 540px) {
-  .site-footer__grid {
-    grid-template-columns: 1fr;
+// Very narrow phones: contact offices go two-up so they don't stack tall.
+@media (min-width: 420px) and (max-width: 900px) {
+  .site-footer__offices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 1.25rem;
   }
 }
 
