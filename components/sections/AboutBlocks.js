@@ -14,15 +14,13 @@ export default function AboutBlocks({ data = {} }) {
         )}
         <div className="about-blocks__list">
           {blocks.map((b, i) => (
-            <Reveal className="about-block" key={i} delay={0.04}>
-              <div className="about-block__label">
-                <span className="about-block__num">{String(i + 1).padStart(2, '0')}</span>
-                <span className="about-block__tag">{b.tag}</span>
-              </div>
-              <div className="about-block__content">
-                <h3 className="about-block__title">{b.title}</h3>
-                <p className="about-block__body">{b.body}</p>
-              </div>
+            <Reveal className="about-card" key={i} delay={Math.min(i * 0.06, 0.3)}>
+              <span className="about-card__num" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              {b.tag && <span className="about-card__tag">{b.tag}</span>}
+              <h3 className="about-card__title">{b.title}</h3>
+              <p className="about-card__body">{b.body}</p>
             </Reveal>
           ))}
         </div>
