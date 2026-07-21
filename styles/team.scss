@@ -126,44 +126,147 @@
   margin: 0;
 }
 
-// ---- Team member bio list (team page) -------------------------------------
-.team-bios {
-  margin-top: 3.5rem;
+// ---- Team page: consolidated profile rows ---------------------------------
+.team-list {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: clamp(1.25rem, 2.5vw, 1.75rem);
 }
 
-.team-bio {
+.team-profile {
   display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: 2rem;
-  padding: 1.75rem;
-  background: var(--grey-100);
-  border-radius: var(--radius-lg);
+  grid-template-columns: clamp(180px, 24vw, 250px) 1fr;
+  gap: clamp(1.5rem, 3vw, 2.75rem);
   align-items: center;
+  background: #fff;
+  border: 1px solid var(--grey-200);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.25rem, 2.5vw, 1.85rem);
+  box-shadow: var(--shadow-soft);
+  transition:
+    transform var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out);
 }
 
-@media (max-width: 700px) {
-  .team-bio {
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
-  }
+.team-profile:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card);
+  border-color: rgba(27, 111, 242, 0.22);
 }
 
-.team-bio__name {
-  font-size: 1.4rem;
-  margin: 0 0 0.25rem;
+.team-profile__media {
+  position: relative;
+  width: 100%;
 }
 
-.team-bio__role {
+.team-profile__media .media-box {
+  border: 1px solid var(--grey-200);
+}
+
+.team-profile__badge {
+  position: absolute;
+  top: 0.7rem;
+  left: 0.7rem;
+  z-index: 2;
+  background: var(--blue-600);
+  color: #fff;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-pill);
+}
+
+.team-profile__name {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+  letter-spacing: -0.01em;
+  margin: 0 0 0.2rem;
+}
+
+.team-profile__role {
   color: var(--blue-600);
   font-weight: 600;
-  margin: 0 0 0.75rem;
+  font-size: 0.95rem;
+  margin: 0 0 1rem;
 }
 
-.team-bio__text {
+.team-profile__skills {
+  list-style: none;
+  margin: 0 0 1.1rem;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.team-profile__skills li {
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-pill);
+  background: var(--blue-100);
+  color: var(--blue-600);
+}
+
+.team-profile__bio {
   color: var(--grey-500);
   line-height: 1.7;
   margin: 0;
+  max-width: 64ch;
+}
+
+.team-profile__socials {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1.1rem;
+}
+
+.team-profile__socials a {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  border: 1px solid var(--grey-200);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--grey-500);
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+
+.team-profile__socials a:hover {
+  background: var(--blue-600);
+  color: #fff;
+  border-color: var(--blue-600);
+}
+
+// Alternate the portrait side on desktop for editorial rhythm.
+@media (min-width: 861px) {
+  .team-profile:nth-child(even) {
+    grid-template-columns: 1fr clamp(180px, 24vw, 250px);
+  }
+  .team-profile:nth-child(even) .team-profile__media {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .team-profile:nth-child(even) .team-profile__body {
+    grid-column: 1;
+    grid-row: 1;
+  }
+}
+
+@media (max-width: 860px) {
+  .team-profile {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .team-profile__media {
+    max-width: 170px;
+  }
 }
