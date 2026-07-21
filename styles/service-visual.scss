@@ -1,0 +1,997 @@
+// ===========================================================================
+// Service-specific hero graphics. Shared glass-card + floating-chip shell,
+// then a distinct animated composition per service. Pure CSS, no JS.
+// ===========================================================================
+.svc-viz {
+  position: relative;
+  width: 100%;
+  padding: 1.4rem 0.5rem;
+}
+
+.svc-viz::before {
+  content: '';
+  position: absolute;
+  inset: 14% 6%;
+  background: radial-gradient(60% 60% at 55% 45%, rgba(27, 111, 242, 0.4), transparent 70%);
+  filter: blur(34px);
+  z-index: 0;
+}
+
+.svc-card {
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(160deg, rgba(18, 41, 74, 0.96), rgba(11, 24, 44, 0.96));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.35rem 1.4rem;
+  box-shadow: 0 40px 90px rgba(4, 12, 28, 0.55);
+}
+
+.svc-dots {
+  display: inline-flex;
+  gap: 5px;
+  flex: none;
+}
+.svc-dots i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.svc-dots i:nth-child(1) {
+  background: rgba(255, 95, 95, 0.7);
+}
+.svc-dots i:nth-child(2) {
+  background: rgba(255, 190, 70, 0.7);
+}
+.svc-dots i:nth-child(3) {
+  background: rgba(60, 200, 120, 0.7);
+}
+
+// ---- Floating chips -------------------------------------------------------
+.svc-chip {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: rgba(13, 29, 51, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius);
+  padding: 0.5rem 0.75rem;
+  box-shadow: 0 16px 34px rgba(4, 12, 28, 0.5);
+  backdrop-filter: blur(8px);
+}
+.svc-chip__icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(47, 132, 255, 0.16);
+  color: var(--blue-400);
+}
+.svc-chip__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+.svc-chip__text strong {
+  font-size: 0.8rem;
+  color: #fff;
+}
+.svc-chip__text em {
+  font-style: normal;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.svc-chip--tl {
+  top: 3%;
+  left: -0.5rem;
+  animation: svc-float-a 5s ease-in-out infinite;
+}
+.svc-chip--tr {
+  top: 5%;
+  right: -0.5rem;
+  animation: svc-float-b 5.5s ease-in-out infinite;
+}
+.svc-chip--bl {
+  bottom: 5%;
+  left: -0.5rem;
+  animation: svc-float-b 6s ease-in-out infinite;
+}
+.svc-chip--br {
+  bottom: 3%;
+  right: -0.5rem;
+  animation: svc-float-a 5.5s ease-in-out infinite;
+}
+
+// Lighthouse-style gauge (web-development chip).
+.svc-gauge {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  flex: none;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 0.76rem;
+  color: #34d399;
+  border: 3px solid #34d399;
+  background: rgba(52, 211, 153, 0.12);
+}
+
+// ---- 1. Web & Landing Pages — browser wireframe ---------------------------
+.svc-browser__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding-bottom: 0.85rem;
+  margin-bottom: 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.svc-browser__url {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-pill);
+  flex: 1;
+}
+.svc-browser__view {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+}
+.svc-wire {
+  display: block;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  animation: svc-build 0.5s ease-out forwards;
+}
+.svc-wire--nav {
+  grid-column: 1 / -1;
+  height: 12px;
+  background: rgba(47, 132, 255, 0.3);
+  animation-delay: 0.05s;
+}
+.svc-wire--hero {
+  grid-column: 1 / -1;
+  height: 46px;
+  background: linear-gradient(120deg, rgba(47, 132, 255, 0.35), rgba(47, 132, 255, 0.12));
+  animation-delay: 0.15s;
+}
+.svc-wire--l1 {
+  grid-column: 1 / 3;
+  height: 9px;
+  animation-delay: 0.25s;
+}
+.svc-wire--l2 {
+  grid-column: 1 / 2;
+  height: 9px;
+  animation-delay: 0.32s;
+}
+.svc-wire--btn {
+  grid-column: 1 / 2;
+  height: 16px;
+  background: var(--blue-600);
+  border-radius: var(--radius-pill);
+  animation-delay: 0.4s;
+}
+.svc-wire--c1 {
+  height: 40px;
+  animation-delay: 0.5s;
+}
+.svc-wire--c2 {
+  height: 40px;
+  animation-delay: 0.58s;
+}
+.svc-wire--c3 {
+  height: 40px;
+  animation-delay: 0.66s;
+}
+
+// ---- 2. Paid Social — Meta ad post ---------------------------------------
+.svc-ad__head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.85rem;
+}
+.svc-ad__avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  flex: none;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--blue-500), var(--blue-600));
+  color: #fff;
+}
+.svc-ad__who {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+.svc-ad__who strong {
+  font-size: 0.85rem;
+  color: #fff;
+}
+.svc-ad__who em {
+  font-style: normal;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+.svc-ad__media {
+  position: relative;
+  overflow: hidden;
+  height: 92px;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, rgba(47, 132, 255, 0.28), rgba(27, 111, 242, 0.12));
+  display: grid;
+  place-items: center;
+  color: var(--blue-400);
+  margin-bottom: 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.svc-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.14) 50%, transparent 70%);
+  transform: translateX(-100%);
+  animation: svc-shimmer 2.6s ease-in-out infinite;
+}
+.svc-ad__row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.svc-ad__stat {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+.svc-ad__stat b {
+  color: #fff;
+  font-size: 0.9rem;
+  margin-right: 0.15rem;
+}
+.svc-ad__cta {
+  margin-left: auto;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--blue-600);
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--radius-pill);
+}
+
+// ---- 3. Search — SERP -----------------------------------------------------
+.svc-serp__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #fff;
+  border-radius: var(--radius-pill);
+  padding: 0.6rem 0.9rem;
+  margin-bottom: 1rem;
+}
+.svc-serp__bar svg {
+  color: var(--grey-500);
+}
+.svc-serp__query {
+  font-size: 0.85rem;
+  color: #0b1220;
+  display: inline-flex;
+  align-items: center;
+}
+.svc-caret {
+  width: 2px;
+  height: 15px;
+  background: var(--blue-600);
+  margin-left: 2px;
+  animation: svc-blink 1s step-end infinite;
+}
+.svc-serp__result {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0;
+}
+.svc-serp__result + .svc-serp__result {
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+.svc-serp__result--ad {
+  background: rgba(47, 132, 255, 0.08);
+  border-radius: var(--radius);
+  padding: 0.55rem;
+  margin: 0 -0.3rem 0.3rem;
+}
+.svc-serp__tag {
+  font-size: 0.6rem;
+  font-weight: 800;
+  color: #34d399;
+  border: 1px solid rgba(52, 211, 153, 0.4);
+  padding: 0.05rem 0.3rem;
+  border-radius: 4px;
+  flex: none;
+}
+.svc-serp__lines {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1;
+}
+.svc-serp__lines b {
+  height: 8px;
+  width: 68%;
+  background: var(--blue-400);
+  border-radius: 3px;
+  display: block;
+}
+.svc-serp__lines i {
+  height: 6px;
+  width: 92%;
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 3px;
+  display: block;
+}
+
+// ---- 4. Social Content — content calendar ---------------------------------
+.svc-cal__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.9rem;
+}
+.svc-cal__head strong {
+  color: #fff;
+  font-size: 0.9rem;
+}
+.svc-cal__pill {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--blue-400);
+  background: rgba(47, 132, 255, 0.14);
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-pill);
+}
+.svc-cal__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-bottom: 0.9rem;
+}
+.svc-cal__cell {
+  aspect-ratio: 1;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.06);
+  opacity: 0;
+  animation: svc-pop 0.4s ease-out forwards;
+  animation-delay: var(--d);
+}
+.svc-cal__cell.is-post {
+  background: var(--blue-600);
+}
+.svc-cal__cell.is-reel {
+  background: #34d399;
+}
+.svc-cal__legend {
+  display: flex;
+  align-items: center;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+.svc-cal__key {
+  width: 9px;
+  height: 9px;
+  border-radius: 3px;
+  margin-right: 0.3rem;
+}
+.svc-cal__key--post {
+  background: var(--blue-600);
+}
+.svc-cal__key--reel {
+  background: #34d399;
+  margin-left: 0.7rem;
+}
+
+// ---- 5. SEO — keyword rankings --------------------------------------------
+.svc-seo__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.9rem;
+}
+.svc-seo__head strong {
+  color: #fff;
+  font-size: 0.9rem;
+}
+.svc-seo__live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #34d399;
+}
+.svc-seo__live i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34d399;
+  animation: svc-pulse 1.6s ease-in-out infinite;
+}
+.svc-seo__list {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.svc-seo__list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+}
+.svc-seo__kw {
+  color: rgba(255, 255, 255, 0.75);
+}
+.svc-seo__rank {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 800;
+  color: #fff;
+}
+.svc-seo__rank em {
+  font-style: normal;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #34d399;
+}
+.svc-seo__bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 44px;
+}
+.svc-seo__bars span {
+  flex: 1;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(180deg, var(--blue-500), var(--blue-600));
+  height: var(--h);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  animation: svc-grow 0.6s var(--ease-out) forwards;
+  animation-delay: var(--d);
+}
+
+// ---- 6. Video Production — player + timeline ------------------------------
+.svc-video__screen {
+  position: relative;
+  height: 120px;
+  border-radius: var(--radius);
+  background:
+    radial-gradient(circle at 50% 45%, rgba(47, 132, 255, 0.28), rgba(11, 24, 44, 0.4)),
+    linear-gradient(160deg, var(--navy-800), var(--navy-900));
+  display: grid;
+  place-items: center;
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.svc-video__play {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: var(--blue-600);
+  box-shadow: 0 10px 26px rgba(27, 111, 242, 0.5);
+}
+.svc-video__play svg {
+  margin-left: 3px;
+}
+.svc-video__ring {
+  position: absolute;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid rgba(47, 132, 255, 0.5);
+  animation: svc-ring 2s ease-out infinite;
+}
+.svc-video__badge {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  z-index: 2;
+  font-size: 0.62rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #fff;
+  background: rgba(52, 211, 153, 0.9);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-pill);
+}
+.svc-video__scrub {
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.12);
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+}
+.svc-video__progress {
+  display: block;
+  height: 100%;
+  width: 40%;
+  background: var(--blue-500);
+  border-radius: 3px;
+  animation: svc-scrub 4s ease-in-out infinite;
+}
+.svc-video__timeline {
+  display: flex;
+  gap: 5px;
+  height: 26px;
+}
+.svc-video__timeline .clip {
+  flex: 1;
+  border-radius: 4px;
+}
+.svc-video__timeline .clip.a {
+  background: rgba(47, 132, 255, 0.5);
+  flex: 2;
+}
+.svc-video__timeline .clip.b {
+  background: rgba(255, 255, 255, 0.14);
+}
+.svc-video__timeline .clip.c {
+  background: rgba(52, 211, 153, 0.5);
+  flex: 1.4;
+}
+
+// ---- 7. Brand Systems — brand kit -----------------------------------------
+.svc-brand__head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+.svc-brand__head strong {
+  color: #fff;
+  font-size: 0.9rem;
+}
+.svc-brand__mark {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  background: linear-gradient(135deg, var(--blue-500), var(--blue-600));
+  transform: rotate(45deg);
+  box-shadow: 0 4px 14px rgba(27, 111, 242, 0.5);
+  flex: none;
+}
+.svc-brand__specimen {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 800;
+  font-size: 3.2rem;
+  line-height: 1;
+  margin-bottom: 0.9rem;
+  background: linear-gradient(120deg, #fff, var(--blue-400));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.svc-brand__swatches {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 0.9rem;
+}
+.svc-brand__swatches span {
+  flex: 1;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  opacity: 0;
+  transform: translateY(8px);
+  animation: svc-build 0.45s ease-out forwards;
+  animation-delay: var(--d);
+}
+.svc-brand__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+// ---- 8. Data & Analytics — dashboard --------------------------------------
+.svc-an__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.svc-an__head strong {
+  color: #fff;
+  font-size: 0.9rem;
+}
+.svc-an__live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #34d399;
+}
+.svc-an__live i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34d399;
+  animation: svc-pulse 1.6s ease-in-out infinite;
+}
+.svc-an__body {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.svc-an__bars {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 80px;
+}
+.svc-an__bars span {
+  flex: 1;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(180deg, var(--blue-500), var(--blue-600));
+  height: var(--h);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  animation: svc-grow 0.6s var(--ease-out) forwards;
+  animation-delay: var(--d);
+}
+.svc-an__donut {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  flex: none;
+}
+.svc-an__donut svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+.svc-an__donut-track {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 3.5;
+}
+.svc-an__donut-val {
+  fill: none;
+  stroke: var(--blue-500);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: svc-donut 1.4s var(--ease-out) 0.2s forwards;
+}
+.svc-an__donut b {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: #fff;
+}
+.svc-an__row {
+  display: flex;
+  gap: 1.75rem;
+}
+.svc-an__row span {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.5);
+}
+.svc-an__row b {
+  font-size: 1rem;
+  color: #fff;
+}
+
+// ---- 9. Lifecycle — email automation flow ---------------------------------
+.svc-flow__head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.1rem;
+  color: #fff;
+}
+.svc-flow__head svg {
+  color: var(--blue-400);
+}
+.svc-flow__head strong {
+  font-size: 0.9rem;
+}
+.svc-flow__nodes {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+.svc-flow__node {
+  align-self: flex-start;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.45rem 0.8rem;
+  border-radius: var(--radius);
+  color: #fff;
+  border: 1px solid rgba(47, 132, 255, 0.5);
+  background: rgba(47, 132, 255, 0.12);
+  opacity: 0.35;
+  transform: translateX(-6px);
+  animation: svc-node-on 0.4s ease-out forwards;
+  animation-delay: var(--d);
+}
+.svc-flow__node:nth-of-type(2) {
+  align-self: center;
+}
+.svc-flow__node:nth-of-type(3) {
+  align-self: flex-end;
+}
+.svc-flow__conn {
+  width: 2px;
+  height: 15px;
+  margin: 2px 0 2px 1.4rem;
+  background: linear-gradient(var(--blue-500), rgba(47, 132, 255, 0.1));
+  opacity: 0;
+  animation: svc-fade 0.3s ease-out forwards;
+  animation-delay: var(--d);
+}
+.svc-flow__email {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius);
+  padding: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.svc-flow__subject {
+  height: 9px;
+  width: 55%;
+  background: var(--blue-400);
+  border-radius: 3px;
+}
+.svc-flow__line {
+  height: 6px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 3px;
+}
+.svc-flow__line--short {
+  width: 70%;
+}
+
+// ---- 10. Growth Strategy — conversion funnel ------------------------------
+.svc-funnel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.1rem;
+}
+.svc-funnel__head strong {
+  color: #fff;
+  font-size: 0.9rem;
+}
+.svc-funnel__q {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--blue-400);
+  background: rgba(47, 132, 255, 0.14);
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-pill);
+}
+.svc-funnel__stages {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  align-items: center;
+}
+.svc-funnel__stage {
+  width: var(--w);
+  min-width: 42%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: var(--radius);
+  background: linear-gradient(90deg, var(--blue-600), var(--blue-500));
+  color: #fff;
+  transform: scaleX(0);
+  animation: svc-funnel-in 0.5s var(--ease-out) forwards;
+  animation-delay: var(--d);
+}
+.svc-funnel__stage:nth-child(3) {
+  background: linear-gradient(90deg, rgba(27, 111, 242, 0.82), rgba(47, 132, 255, 0.82));
+}
+.svc-funnel__stage:nth-child(4) {
+  background: linear-gradient(90deg, rgba(27, 111, 242, 0.66), rgba(47, 132, 255, 0.66));
+}
+.svc-funnel__stage:nth-child(5) {
+  background: linear-gradient(90deg, rgba(27, 111, 242, 0.5), rgba(47, 132, 255, 0.5));
+}
+.svc-funnel__label {
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.svc-funnel__stage b {
+  font-size: 0.82rem;
+}
+
+// ---- Keyframes ------------------------------------------------------------
+@keyframes svc-float-a {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-11px);
+  }
+}
+@keyframes svc-float-b {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(9px);
+  }
+}
+@keyframes svc-build {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes svc-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes svc-grow {
+  to {
+    transform: scaleY(1);
+  }
+}
+@keyframes svc-funnel-in {
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes svc-donut {
+  to {
+    stroke-dashoffset: 32;
+  }
+}
+@keyframes svc-node-on {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes svc-fade {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes svc-shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+@keyframes svc-blink {
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes svc-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.6;
+  }
+}
+@keyframes svc-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+@keyframes svc-scrub {
+  0% {
+    width: 8%;
+  }
+  50% {
+    width: 70%;
+  }
+  100% {
+    width: 8%;
+  }
+}
+
+@media (max-width: 992px) {
+  .svc-viz {
+    max-width: 460px;
+    margin-inline: auto;
+  }
+  .svc-chip--tl,
+  .svc-chip--bl {
+    left: 0;
+  }
+  .svc-chip--tr,
+  .svc-chip--br {
+    right: 0;
+  }
+}
+
+// Motion-safe: settle every animated element into its finished state.
+@media (prefers-reduced-motion: reduce) {
+  .svc-wire,
+  .svc-cal__cell,
+  .svc-brand__swatches span,
+  .svc-flow__node,
+  .svc-flow__conn {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .svc-seo__bars span,
+  .svc-an__bars span {
+    transform: scaleY(1) !important;
+  }
+  .svc-funnel__stage {
+    transform: scaleX(1) !important;
+  }
+  .svc-an__donut-val {
+    stroke-dashoffset: 32 !important;
+  }
+  .svc-chip,
+  .svc-shimmer,
+  .svc-video__ring,
+  .svc-video__progress,
+  .svc-seo__live i,
+  .svc-an__live i,
+  .svc-caret {
+    animation: none !important;
+  }
+}

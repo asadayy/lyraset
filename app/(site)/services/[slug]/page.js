@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { getServices, getServiceBySlug, getTeam } from '@/lib/data';
 import { buildMetadata } from '@/lib/metadata';
 import MediaImage from '@/components/MediaImage';
+import ServiceVisual from '@/components/sections/ServiceVisual';
 import LeadForm from '@/components/forms/LeadForm';
 import TeamCard from '@/components/cards/TeamCard';
 import SectionHeader from '@/components/SectionHeader';
@@ -76,13 +77,17 @@ export default async function ServiceDetailPage({ params }) {
             </Reveal>
           </div>
           <Reveal className="service-hero__visual" delay={0.1}>
-            <MediaImage
-              media={service.heroImage}
-              label={service.title}
-              ratio="4/3"
-              sizes="(max-width: 992px) 90vw, 45vw"
-              priority
-            />
+            {service.heroImage?.url ? (
+              <MediaImage
+                media={service.heroImage}
+                label={service.title}
+                ratio="4/3"
+                sizes="(max-width: 992px) 90vw, 45vw"
+                priority
+              />
+            ) : (
+              <ServiceVisual slug={service.slug} iconKey={service.iconKey} />
+            )}
           </Reveal>
         </div>
       </section>
