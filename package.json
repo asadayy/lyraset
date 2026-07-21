@@ -10,6 +10,7 @@
     "lint": "next lint",
     "format": "prettier --write \"**/*.{js,jsx,scss,md}\"",
     "seed": "node --env-file=.env scripts/seed.mjs",
+    "create-admin": "node --env-file=.env scripts/create-admin.mjs",
     "analyze": "cross-env ANALYZE=true next build"
   },
   "dependencies": {

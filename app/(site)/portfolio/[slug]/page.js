@@ -6,6 +6,7 @@ import MediaImage from '@/components/MediaImage';
 import Reveal from '@/components/motion/Reveal';
 import Icon from '@/components/Icon';
 import { BreadcrumbJsonLd } from '@/components/JsonLd';
+import { getSiteUrl } from '@/lib/site';
 import '@/styles/portfolio.scss';
 
 export const revalidate = 3600;
@@ -31,7 +32,7 @@ export default async function CaseStudyPage({ params }) {
   const { slug } = await params;
   const item = await getCaseStudyBySlug(slug);
   if (!item) return notFound();
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  const siteUrl = getSiteUrl();
 
   const blocks = [
     ['The Challenge', item.challenge],

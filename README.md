@@ -171,37 +171,67 @@ CMS, and contrast-checked color tokens.
 
 ---
 
+## Admin authentication (DB-managed)
+
+Admin auth is **database-only** — the identity lives in the `AdminUser`
+collection, verified with a bcrypt hash ([lib/auth.js](lib/auth.js)). There is
+no environment-variable login fallback, so nothing about the admin account needs
+to live in Vercel's runtime env.
+
+Create or rotate the admin against whatever database `MONGODB_URI` points at:
+
+```bash
+npm run create-admin -- admin@yourdomain.com "your-strong-password"
+```
+
+Run it locally pointed at the **production** Atlas URI (put that URI in `.env`
+first) to provision the live admin. `npm run seed` also creates one from
+`ADMIN_EMAIL` + `ADMIN_PASSWORD_HASH` when those are set — but `create-admin` is
+the tool for changing the password later without touching content.
+
+---
+
 ## Deploy to Vercel
 
-1. **Push to GitHub** (this repo).
-2. **Import the repo** into Vercel. Framework preset: Next.js (defaults are
-   fine). Set the region to **`bom1`** (Mumbai) for the Pakistan/Gulf audience
-   under Project → Settings → Functions.
-3. **Add environment variables** (Project → Settings → Environment Variables) —
-   the same keys you set in `.env`:
+1. **Push to GitHub** (this repo). `vercel.json` pins the function region to
+   **`bom1`** (Mumbai) for the Pakistan/Gulf audience.
+2. **Import the repo** into Vercel (framework preset: Next.js — defaults are fine).
+3. **Set environment variables** (Project → Settings → Environment Variables) for
+   the **Production** (and Preview) environments:
+
+   **Required at runtime:**
 
    | Variable | Notes |
    | --- | --- |
-   | `MONGODB_URI` | Atlas SRV string; allow-list `0.0.0.0/0` for Vercel |
-   | `CLOUDINARY_CLOUD_NAME` / `CLOUDINARY_API_KEY` / `CLOUDINARY_API_SECRET` | server-only |
-   | `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` | exposed for the image loader |
-   | `NEXTAUTH_SECRET` | `openssl rand -base64 32` |
-   | `NEXTAUTH_URL` | your production URL |
-   | `ADMIN_EMAIL` / `ADMIN_PASSWORD_HASH` | `node scripts/hash-password.js "…"` |
-   | `NEXT_PUBLIC_SITE_URL` | your production URL (canonical/sitemap) |
-   | `REVALIDATE_SECRET` | random string |
-   | `RESEND_API_KEY` / `LEAD_NOTIFY_EMAIL` | optional email notifications |
-   | `NEXT_PUBLIC_GA4_ID` / `NEXT_PUBLIC_META_PIXEL_ID` | optional analytics |
+   | `MONGODB_URI` | Atlas SRV string incl. db name (`…mongodb.net/lyraset`); allow-list `0.0.0.0/0` in Atlas → Network Access |
+   | `NEXTAUTH_SECRET` | `openssl rand -base64 32` — **required**, admin auth 500s without it |
+   | `NEXTAUTH_URL` | your production URL, e.g. `https://lyraset.com` |
+   | `NEXT_PUBLIC_SITE_URL` | your production URL — canonical/OG/sitemap base (must be set at **build** time) |
+   | `CLOUDINARY_CLOUD_NAME` / `CLOUDINARY_API_KEY` / `CLOUDINARY_API_SECRET` | media uploads (server-only) |
+   | `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` | exposed for the `next/image` loader |
+   | `REVALIDATE_SECRET` | random string; protects `/api/revalidate` |
 
-4. **Seed the database** once (locally, pointing at the production Atlas URI, or
-   via a one-off script run): `npm run seed`.
-5. **Deploy.** After the first deploy, verify: a public page loads, `/admin/login`
-   signs in, editing a service saves and the public page updates within seconds,
-   an image upload lands in Cloudinary and the Media Library, and a contact-form
-   submission appears in the Leads inbox.
+   **Optional (features no-op when unset):** `RESEND_API_KEY` + `LEAD_NOTIFY_EMAIL`
+   (email notifications), `NEXT_PUBLIC_GA4_ID`, `NEXT_PUBLIC_META_PIXEL_ID`.
 
-> **Note on serverless:** there are no runtime filesystem writes — uploads go
-> straight to Cloudinary — so everything works on Vercel's serverless runtime.
+   **Seed/admin provisioning only (not needed at runtime):** `ADMIN_EMAIL`,
+   `ADMIN_PASSWORD_HASH`.
+
+   > **Public URL:** `NEXT_PUBLIC_SITE_URL` drives `metadataBase`, canonical tags,
+   > OpenGraph URLs, `sitemap.xml`, `robots.txt`, and JSON-LD. If it's ever unset,
+   > the app falls back to Vercel's `VERCEL_PROJECT_PRODUCTION_URL` / `VERCEL_URL`
+   > ([lib/site.js](lib/site.js)) instead of `localhost`, so URLs are never broken
+   > in production — but set it to your real domain for correct canonicals.
+
+4. **Seed the database** once — locally, with `.env` pointed at the production
+   Atlas URI: `npm run seed`, then `npm run create-admin -- <email> <password>`.
+5. **Deploy**, then verify: a public page loads with correct absolute URLs in
+   `view-source` (canonical/OG), `/admin/login` signs in, editing a service saves
+   and the public page updates within seconds, an image upload lands in Cloudinary
+   + the Media Library, and a contact-form submission appears in the Leads inbox.
+
+> **Serverless-safe:** no runtime filesystem writes — uploads go straight to
+> Cloudinary — so everything works on Vercel's serverless runtime.
 
 ---
 

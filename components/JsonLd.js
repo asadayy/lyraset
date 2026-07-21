@@ -1,4 +1,5 @@
 import { getSettings, getSeoDefault } from '@/lib/data';
+import { getSiteUrl } from '@/lib/site';
 
 /**
  * JSON-LD structured data components. Each renders a <script type="application/
@@ -17,7 +18,7 @@ function Ld({ data }) {
 /** Organization schema with both office addresses + social profiles. */
 export async function OrganizationJsonLd() {
   const [settings, seo] = await Promise.all([getSettings(), getSeoDefault()]);
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  const siteUrl = getSiteUrl();
   const org = seo?.organization || {};
 
   const data = {
@@ -42,7 +43,7 @@ export async function OrganizationJsonLd() {
 
 /** Service schema for a service detail page. */
 export function ServiceJsonLd({ service }) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  const siteUrl = getSiteUrl();
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Service',

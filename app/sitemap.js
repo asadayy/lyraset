@@ -1,11 +1,12 @@
 import { getServices, getCaseStudies, getJobs } from '@/lib/data';
+import { getSiteUrl } from '@/lib/site';
 
 /**
  * Dynamic sitemap generated from published CMS content.
  * @returns {Promise<import('next').MetadataRoute.Sitemap>}
  */
 export default async function sitemap() {
-  const base = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  const base = getSiteUrl();
   const [services, cases, jobs] = await Promise.all([
     getServices(),
     getCaseStudies(),

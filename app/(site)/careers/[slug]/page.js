@@ -6,6 +6,7 @@ import ApplicationForm from '@/components/forms/ApplicationForm';
 import Reveal from '@/components/motion/Reveal';
 import Icon from '@/components/Icon';
 import { JobPostingJsonLd, BreadcrumbJsonLd } from '@/components/JsonLd';
+import { getSiteUrl } from '@/lib/site';
 import '@/styles/careers.scss';
 
 export const revalidate = 3600;
@@ -31,7 +32,7 @@ export default async function JobDetailPage({ params }) {
   const { slug } = await params;
   const job = await getJobBySlug(slug);
   if (!job) return notFound();
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  const siteUrl = getSiteUrl();
 
   return (
     <>

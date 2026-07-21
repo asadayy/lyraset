@@ -1,9 +1,10 @@
 import { displayFont, bodyFont } from './fonts';
+import { getSiteUrl } from '@/lib/site';
 import '@/styles/globals.scss';
 import '@/styles/animations.scss';
 
 export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  metadataBase: new URL(getSiteUrl()),
   title: {
     default: 'LYRASET — International Marketing Agency',
     template: '%s · LYRASET',

@@ -10,6 +10,7 @@ import SectionHeader from '@/components/SectionHeader';
 import Reveal from '@/components/motion/Reveal';
 import Icon from '@/components/Icon';
 import { ServiceJsonLd, BreadcrumbJsonLd } from '@/components/JsonLd';
+import { getSiteUrl } from '@/lib/site';
 import '@/styles/service-detail.scss';
 
 export const revalidate = 3600;
@@ -36,7 +37,7 @@ export default async function ServiceDetailPage({ params }) {
   const [service, team] = await Promise.all([getServiceBySlug(slug), getTeam()]);
   if (!service) return notFound();
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  const siteUrl = getSiteUrl();
 
   return (
     <>
