@@ -188,7 +188,12 @@ h4 {
 .section--dark {
   background: var(--navy-950);
   color: rgba(255, 255, 255, 0.86);
+}
 
+// Headings default to dark ink (Bootstrap $headings-color); force white on any
+// dark surface so display titles never render dark-on-dark.
+.section--dark,
+.page-hero--dark {
   h1,
   h2,
   h3,
