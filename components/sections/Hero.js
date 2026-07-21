@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Icon from '@/components/Icon';
 import MediaImage from '@/components/MediaImage';
+import HeroVisual from '@/components/sections/HeroVisual';
 import HeroHeadline from '@/components/motion/HeroHeadline';
 import Reveal from '@/components/motion/Reveal';
 import Magnetic from '@/components/motion/Magnetic';
@@ -82,16 +83,20 @@ export default function Hero({ data = {}, settings }) {
         </div>
 
         <div className="hero__visual">
-          <div className="floaty hero__illustration">
-            <MediaImage
-              media={image}
-              label="LYRASET"
-              ratio="1"
-              sizes="(max-width: 992px) 80vw, 40vw"
-              priority
-              rounded
-            />
-          </div>
+          {image?.url ? (
+            <div className="floaty hero__illustration">
+              <MediaImage
+                media={image}
+                label="LYRASET"
+                ratio="1"
+                sizes="(max-width: 992px) 80vw, 40vw"
+                priority
+                rounded
+              />
+            </div>
+          ) : (
+            <HeroVisual />
+          )}
           <span className="hero__scroll" aria-hidden="true">
             <Icon name="arrow-down" size={18} /> Scroll
           </span>

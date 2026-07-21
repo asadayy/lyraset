@@ -153,6 +153,327 @@
 @media (max-width: 992px) {
   .hero__visual {
     order: -1;
-    max-width: 380px;
+    max-width: 420px;
+  }
+}
+
+// ---- Designed hero graphic (shown when no hero image is uploaded) ----------
+.hero-viz {
+  position: relative;
+  width: 100%;
+  padding: 1.25rem 0.5rem;
+}
+
+.hero-viz::before {
+  content: '';
+  position: absolute;
+  inset: 12% 4%;
+  background: radial-gradient(60% 60% at 60% 40%, rgba(27, 111, 242, 0.4), transparent 70%);
+  filter: blur(34px);
+  z-index: 0;
+}
+
+.hero-viz__card {
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(160deg, rgba(18, 41, 74, 0.96), rgba(11, 24, 44, 0.96));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  padding: 1.3rem 1.4rem 1.45rem;
+  box-shadow: 0 40px 90px rgba(4, 12, 28, 0.55);
+}
+
+.hero-viz__head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.35rem;
+}
+
+.hero-viz__dots {
+  display: inline-flex;
+  gap: 5px;
+}
+
+.hero-viz__dots i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.hero-viz__dots i:first-child {
+  background: rgba(255, 95, 95, 0.7);
+}
+.hero-viz__dots i:nth-child(2) {
+  background: rgba(255, 190, 70, 0.7);
+}
+.hero-viz__dots i:nth-child(3) {
+  background: rgba(60, 200, 120, 0.7);
+}
+
+.hero-viz__title {
+  flex: 1;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.hero-viz__live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.12);
+  border: 1px solid rgba(52, 211, 153, 0.25);
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-pill);
+}
+
+.hero-viz__live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34d399;
+  animation: hero-pulse 1.6s ease-in-out infinite;
+}
+
+.hero-viz__metric {
+  margin-bottom: 1rem;
+}
+
+.hero-viz__metric-label {
+  display: block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.45);
+  margin-bottom: 0.35rem;
+}
+
+.hero-viz__metric-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+}
+
+.hero-viz__metric-value {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+  color: #fff;
+  line-height: 1;
+}
+
+.hero-viz__delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #34d399;
+}
+
+.hero-viz__chart {
+  position: relative;
+  height: 118px;
+  margin-bottom: 1.1rem;
+}
+
+.hero-viz__chart svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.hero-viz__area {
+  opacity: 0;
+  animation: hero-fade 1s ease-out 0.3s forwards;
+}
+
+.hero-viz__line {
+  stroke-dasharray: 470;
+  stroke-dashoffset: 0;
+  animation: hero-draw 1.7s var(--ease-out) forwards;
+  filter: drop-shadow(0 4px 10px rgba(47, 132, 255, 0.5));
+}
+
+.hero-viz__peak {
+  position: absolute;
+  top: 3px;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--blue-500);
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 4px rgba(47, 132, 255, 0.3);
+  animation: hero-pulse 1.8s ease-in-out infinite;
+}
+
+.hero-viz__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 1rem;
+}
+
+.hero-viz__stats div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.hero-viz__stats div + div {
+  padding-left: 0.85rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hero-viz__stats span {
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.hero-viz__stats strong {
+  font-size: 1.05rem;
+  color: #fff;
+  font-weight: 700;
+}
+
+// Floating KPI chips
+.hero-viz__chip {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: rgba(13, 29, 51, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius);
+  padding: 0.55rem 0.8rem;
+  box-shadow: 0 16px 34px rgba(4, 12, 28, 0.5);
+  backdrop-filter: blur(8px);
+}
+
+.hero-viz__chip-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(47, 132, 255, 0.16);
+  color: var(--blue-400);
+}
+
+.hero-viz__chip-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.hero-viz__chip-text strong {
+  font-size: 0.82rem;
+  color: #fff;
+}
+
+.hero-viz__chip-text em {
+  font-style: normal;
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.hero-viz__chip--a {
+  top: 2%;
+  left: -0.75rem;
+  animation: hero-float-a 5s ease-in-out infinite;
+}
+
+.hero-viz__chip--b {
+  bottom: 5%;
+  right: -0.5rem;
+  animation: hero-float-b 6s ease-in-out infinite;
+}
+
+@keyframes hero-draw {
+  from {
+    stroke-dashoffset: 470;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes hero-fade {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes hero-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.28);
+    opacity: 0.7;
+  }
+}
+
+@keyframes hero-float-a {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes hero-float-b {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}
+
+@media (max-width: 992px) {
+  .hero-viz {
+    max-width: 440px;
+    margin-inline: auto;
+  }
+  .hero-viz__chip--a {
+    left: 0;
+  }
+  .hero-viz__chip--b {
+    right: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-viz__area,
+  .hero-viz__line,
+  .hero-viz__peak,
+  .hero-viz__chip--a,
+  .hero-viz__chip--b,
+  .hero-viz__live-dot {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+  .hero-viz__line {
+    stroke-dashoffset: 0 !important;
   }
 }
