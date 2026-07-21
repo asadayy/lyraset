@@ -22,8 +22,13 @@ export default function AdminLoginPage() {
     if (res?.ok) {
       router.push('/admin');
       router.refresh();
-    } else {
+    } else if (res?.error === 'CredentialsSignin') {
+      // authorize() returned null — wrong password, or the DB couldn't be
+      // reached (see server logs; check MONGODB_URI + Atlas IP allow-list).
       setError('Invalid email or password.');
+    } else {
+      // 500 / misconfiguration — usually a missing NEXTAUTH_SECRET in production.
+      setError('Sign-in failed. Please try again, or check the server configuration.');
     }
   }
 
